@@ -25,20 +25,21 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Total {
+public class Floor {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    private Date date;
+    private String info;
 
-    @OneToMany(mappedBy = "total", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private List<Floors> floor = new ArrayList<>();
+    @OneToMany(mappedBy = "floor", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<Sensor> sensors = new ArrayList<>();
 
-    public void addFloors(Floors floors) {
-        this.floor.add(floors);
-        floors.setTotal(this);
+    public void addSensor(Sensor sensor) {
+        this.sensors.add(sensor);
+        sensor.setFloor(this);
     }
 }
 

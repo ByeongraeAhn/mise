@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -19,15 +21,32 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Floors {
+public class Sensor implements Serializable {
 
     @Id
-    String floor;
+    String sensorName;
 
-    String sensor;
+    private String info;
 
     @ManyToOne
-    @JsonIgnore
-	private Total total;
+    @JsonIgnore //양방향 순환참조
+    @Id
+    private Floor floor;
+
+    // 온도
+    boolean useTemperature;
+
+    // 습도
+    boolean useHumidity;
+
+    // 미세먼지
+    boolean useFinedust;
+
+    // 이산화탄소
+    boolean useCarbondioxide;
+
+    // 포름알데히드
+    boolean useFormaldehyde;
+
 
 }

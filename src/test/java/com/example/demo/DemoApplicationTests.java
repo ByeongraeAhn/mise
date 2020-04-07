@@ -1,11 +1,10 @@
 package com.example.demo;
 
-import java.util.Date;
 import java.util.List;
 
-import com.example.demo.entity.Floors;
-import com.example.demo.entity.Total;
-import com.example.demo.repository.TotalRepository;
+import com.example.demo.entity.Floor;
+import com.example.demo.entity.Sensor;
+import com.example.demo.repository.FloorRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,36 +20,37 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class DemoApplicationTests {
 
 	@Autowired
-	TotalRepository totalRepository;
+	FloorRepository floorRepository;
 
 	@Test
 	public void save() {
 		// Given
-		Floors floors = Floors.builder().floor("3층").sensor("미세먼지").build();
+		Sensor sensor = Sensor.builder().sensorName("사무실L").build();
 
-		// Total total = Total.builder().date(new Date()).build();
-		Total total = new Total();
-		total.setDate(new Date());
-		total.addFloors(floors);
+		Floor floor = Floor.builder().build();
 
-		Total newTotal = totalRepository.save(total);
+		// 양방향 링크
+		floor.addSensor(sensor);
+
+		// When
+		Floor newTotal = floorRepository.save(floor);
 
 		// Then
 
 	}
 
 	@Test
-	public void crud() throws JsonProcessingException {
+	public void read() throws JsonProcessingException {
 		// Given
 
 		// When
 		// Optional<Total> total = totalRepository.findById(1l);
-		List<Total> total = totalRepository.findAll();
+		List<Floor> total = floorRepository.findAll();
 
 		System.out.println("================================================");
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(mapper.writeValueAsString(total));
-		System.out.println(total.get(0).getFloor().get(0).getFloor());
+		System.out.println(total.get(0).getSensors().get(0).getSensorName());
 
 		// Then
 

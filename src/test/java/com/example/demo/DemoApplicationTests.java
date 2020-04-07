@@ -25,7 +25,7 @@ public class DemoApplicationTests {
 	@Test
 	public void save() {
 		// Given
-		Sensor sensor = Sensor.builder().sensorName("사무실L").build();
+		Sensor sensor = Sensor.builder().name("사무실L").build();
 
 		Floor floor = Floor.builder().build();
 
@@ -50,7 +50,7 @@ public class DemoApplicationTests {
 		System.out.println("================================================");
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(mapper.writeValueAsString(total));
-		System.out.println(total.get(0).getSensors().get(0).getSensorName());
+		System.out.println(total.get(0).getSensors().get(0).getName());
 
 		// Then
 

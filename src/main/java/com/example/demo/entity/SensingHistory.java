@@ -1,15 +1,14 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,36 +25,41 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Sensor implements Serializable {
+public class SensingHistory implements Serializable {
 
     @Id
-    String name;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
 
     private String info;
 
     @ManyToOne
     @JsonIgnore //양방향 순환참조 제거
-    @Id
-    private Floor floor;
-
-    @OneToMany(mappedBy = "sensor", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @Builder.Default
-    private List<SensingHistory> sensingHistorys = new ArrayList<>();
+    // @Id
+    @JoinColumns({
+        @JoinColumn(
+            name = "name",
+            referencedColumnName = "name"),
+        @JoinColumn(
+            name = "floor_id",
+            referencedColumnName = "floor_id")
+    })
+    private Sensor sensor;
 
     // 온도
-    boolean useTemperature;
+    String useTemperature;
 
     // 습도
-    boolean useHumidity;
+    String useHumidity;
 
     // 미세먼지
-    boolean useFinedust;
+    String useFinedust;
 
     // 이산화탄소
-    boolean useCarbondioxide;
+    String useCarbondioxide;
 
     // 포름알데히드
-    boolean useFormaldehyde;
+    String useFormaldehyde;
 
 
 }

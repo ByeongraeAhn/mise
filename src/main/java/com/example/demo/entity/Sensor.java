@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -36,6 +37,7 @@ public class Sensor implements Serializable {
     @ManyToOne
     @JsonIgnore //양방향 순환참조 제거
     @Id
+    //@JoinColumn(name = "floor_id", referencedColumnName = "id")
     private Floor floor;
 
     @OneToMany(mappedBy = "sensor", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)

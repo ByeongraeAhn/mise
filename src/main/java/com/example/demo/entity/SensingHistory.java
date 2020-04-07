@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,33 +34,35 @@ public class SensingHistory implements Serializable {
 
     private String info;
 
+    private Date date;
+
     @ManyToOne
     @JsonIgnore //양방향 순환참조 제거
     // @Id
     @JoinColumns({
         @JoinColumn(
-            name = "name",
-            referencedColumnName = "name"),
-        @JoinColumn(
             name = "floor_id",
-            referencedColumnName = "floor_id")
+            referencedColumnName = "floor_id"),
+        @JoinColumn(
+            name = "name",
+            referencedColumnName = "name")
     })
     private Sensor sensor;
 
     // 온도
-    String useTemperature;
+    String temperature;
 
     // 습도
-    String useHumidity;
+    String humidity;
 
     // 미세먼지
-    String useFinedust;
+    String finedust;
 
     // 이산화탄소
-    String useCarbondioxide;
+    String carbondioxide;
 
     // 포름알데히드
-    String useFormaldehyde;
+    String formaldehyde;
 
 
 }
